@@ -1,13 +1,16 @@
 const url = "https://api.github.com/users";
-const searchInputEl = document.getElementById("searchInput");
-const searchButtonEl = document.getElementById("searchBtn");
-const profileContainerEl = document.getElementById("profileContainer");
-const loadingEl = document.getElementById("loading");
+
+const searchInput = document.getElementById("search-inp")
+const searchButton = document.getElementById("btn")
+const profileCon = document.getElementById("profile-con")
+const loadingEl = document.getElementById("loading")
+
+
 
 const generateProfile = (profile) => {
   return `
    <div class="profile-box">
-   <div class="top-section">
+   <div class="top-sec">
      <div class="left">
        <div class="avatar">
          <img alt="avatar" src="${profile.avatar_url}" />
@@ -46,29 +49,35 @@ const generateProfile = (profile) => {
    `;
 };
 
-const fetchProfile = async () => {
-  const username = searchInputEl.value;
+const fectchProfile = async () => {
 
-  loadingEl.innerText = "loading.....";
-  loadingEl.style.color = "black";
+  const userName = searchInput.value;
+  loadingEl.innerText - "loading..."
+  loadingEl.style.color = "black"
 
   try {
-    const res = await fetch(`${url}/${username}`);
+    const res = await fetch(`${url}/${userName}`)
     const data = await res.json();
+
     if (data.bio) {
       loadingEl.innerText = "";
-      profileContainerEl.innerHTML = generateProfile(data);
+      profileCon.innerHTML = generateProfile(data)
     } else {
       loadingEl.innerHTML = data.message;
-      loadingEl.style.color = "red";
-      profileContainerEl.innerText = "";
+      loadingEl.style.color = "red"
+      profileCon.innerText = ""
     }
+    console.log('data', data);
 
-    console.log("data", data);
+
+
   } catch (error) {
     console.log({ error });
     loadingEl.innerText = "";
-  }
-};
 
-searchButtonEl.addEventListener("click", fetchProfile);
+
+  }
+}
+
+searchButton.addEventListener("click", fectchProfile)
+// fectchProfile()
